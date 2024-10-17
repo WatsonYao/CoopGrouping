@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="240dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        tools:src="#94c" />
+
+    <ImageView
+        android:id="@+id/w1"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/image"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/w2"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/w1"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/w3"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_below="@+id/w1"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/image"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/w4"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_below="@+id/w1"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/w3"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/boss"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignRight="@+id/image"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="8dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/monthStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:layout_marginLeft="16dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        tools:text="10月，周三" />
+
+    <TextView
+        android:id="@+id/monthEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="16dp"
+        android:layout_toRightOf="@+id/monthStart"
+        android:gravity="center"
+        android:textSize="14sp"
+        tools:text="10月，周三" />
+
+    <TextView
+        android:id="@+id/timeStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/monthStart"
+        android:layout_marginLeft="16dp"
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:textSize="18sp"
+        tools:text="00:00" />
+
+    <TextView
+        android:id="@+id/timeEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/monthStart"
+        android:layout_alignStart="@+id/monthEnd"
+        android:gravity="center"
+        android:textSize="18sp"
+        tools:text="16:00" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.3"
+        android:background="#000000" />
+
+</RelativeLayout>
+
+
