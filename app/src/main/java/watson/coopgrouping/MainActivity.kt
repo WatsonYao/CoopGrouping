@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
       loadData()
     }
 
-    val adapter = DateAdapter(items) {}
+    val adapter = DateAdapter(this, items) {}
 
     val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
     recyclerView.layoutManager = layoutManager

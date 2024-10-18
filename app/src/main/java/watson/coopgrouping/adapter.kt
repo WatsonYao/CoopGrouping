@@ -1,6 +1,7 @@
 package watson.coopgrouping
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +9,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class DateAdapter(
-  private val items: List<Node>, private val onItemClick: (Node) -> Unit
+  private val context: Context,
+  private val items: List<Node>,
+  private val onItemClick: (Node) -> Unit
 ) : RecyclerView.Adapter<DateAdapter.ViewHolder>() {
-
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val monthStart: TextView = view.findViewById(R.id.monthStart)
@@ -45,23 +49,34 @@ class DateAdapter(
     holder.monthEnd.text = queryDate(dateEnd)
     holder.itemView.setOnClickListener { onItemClick(item) }
     val stage = item.setting.coopStage.thumbnailImage.url
-    Glide.with(holder.itemView.context).load(stage).into(holder.image)
+    Glide.with(holder.itemView.context).load(stage)
+      .apply(RequestOptions.bitmapTransform(roundedCorners))
+      .into(holder.image)
     listOf(holder.w1, holder.w2, holder.w3, holder.w4).forEachIndexed { index, imageView ->
       Glide.with(holder.itemView.context).load(item.setting.weapons[index].image.url)
         .into(imageView)
     }
-    Glide.with(holder.itemView.context).load(bossMap[item.setting.boss.name]).into(holder.boss)
+    val bossUrl = bossMap[item.setting.boss.name]
+    if (bossUrl != null) {
+      holder.boss.visibility = View.VISIBLE
+      Glide.with(holder.itemView.context).load(bossUrl).into(holder.boss)
+    } else {
+      holder.boss.visibility = View.GONE
+    }
   }
 
   private fun queryDate(date: ZonedDateTime): String {
     return "${date.format(formatterMonth)}月${date.format(formatterDay)}，周${getDayOfWeek(date)}"
   }
 
-  // 格式化输出，你可以自定义格式
+  private val roundedCorners: RoundedCorners by lazy {
+    val px = context.resources.displayMetrics.density * 12
+    RoundedCorners(px.toInt())
+  }
+
   private val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
   private val formatterDay = DateTimeFormatter.ofPattern("dd")
   private val formatterMonth = DateTimeFormatter.ofPattern("MM")
-//    return
 
   private val bossMap: HashMap<String, Int> by lazy {
     val map = HashMap<String, Int>()
@@ -69,6 +84,7 @@ class DateAdapter(
     map["Horrorboros"] = R.drawable.cl
     map["Megalodontia"] = R.drawable.dz
     map["Triumvirate"] = R.drawable.sg
+    // 还有一个随机的图标
     map
   }
 
