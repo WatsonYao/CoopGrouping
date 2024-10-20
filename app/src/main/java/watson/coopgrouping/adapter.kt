@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class DateAdapter(
   private val context: Context,
@@ -25,6 +27,7 @@ class DateAdapter(
     val monthEnd: TextView = view.findViewById(R.id.monthEnd)
     val timeStart: TextView = view.findViewById(R.id.timeStart)
     val timeEnd: TextView = view.findViewById(R.id.timeEnd)
+    val diff: TextView = view.findViewById(R.id.diff)
     val image: ImageView = view.findViewById(R.id.image)
     val w1: ImageView = view.findViewById(R.id.w1)
     val w2: ImageView = view.findViewById(R.id.w2)
@@ -38,6 +41,10 @@ class DateAdapter(
     return ViewHolder(view)
   }
 
+  private val nowTime by lazy{
+    ZonedDateTime.now(ZoneId.systemDefault())
+  }
+
   @SuppressLint("SetTextI18n")
   override fun onBindViewHolder(holder: DateAdapter.ViewHolder, position: Int) {
     val item = items[position]
@@ -48,6 +55,13 @@ class DateAdapter(
     holder.monthStart.text = queryDate(dateStart)
     holder.monthEnd.text = queryDate(dateEnd)
     holder.itemView.setOnClickListener { onItemClick(item) }
+    if(dateStart.isBefore(nowTime) && dateEnd.isAfter(nowTime)) {
+      holder.diff.visibility = View.VISIBLE
+      holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
+    }else{
+      holder.diff.visibility = View.GONE
+      holder.diff.text = ""
+    }
     val stage = item.setting.coopStage.thumbnailImage.url
     Glide.with(holder.itemView.context).load(stage)
       .apply(RequestOptions.bitmapTransform(roundedCorners))
