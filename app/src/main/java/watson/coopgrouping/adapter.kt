@@ -41,12 +41,10 @@ class DateAdapter(
     return ViewHolder(view)
   }
 
-  private val nowTime by lazy{
-    ZonedDateTime.now(ZoneId.systemDefault())
-  }
 
   @SuppressLint("SetTextI18n")
   override fun onBindViewHolder(holder: DateAdapter.ViewHolder, position: Int) {
+    val nowTime =ZonedDateTime.now(ZoneId.systemDefault())
     val item = items[position]
     val dateStart = localTime(item.startTime)
     val dateEnd = localTime(item.endTime)
@@ -55,7 +53,9 @@ class DateAdapter(
     holder.monthStart.text = queryDate(dateStart)
     holder.monthEnd.text = queryDate(dateEnd)
     holder.itemView.setOnClickListener { onItemClick(item) }
-    if(dateStart.isBefore(nowTime) && dateEnd.isAfter(nowTime)) {
+    val current = dateStart.isBefore(nowTime) && dateEnd.isAfter(nowTime)
+    //log("$position $current || $dateStart $dateEnd")
+    if(current) {
       holder.diff.visibility = View.VISIBLE
       holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
     }else{
