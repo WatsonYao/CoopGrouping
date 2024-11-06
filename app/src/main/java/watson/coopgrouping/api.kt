@@ -21,6 +21,7 @@ data class Data(
 @Keep
 data class CoopGroupingSchedule(
   val regularSchedules: RegularSchedules,
+  val teamContestSchedules: RegularSchedules,
 )
 
 @Keep

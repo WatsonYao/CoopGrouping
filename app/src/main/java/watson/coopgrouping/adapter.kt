@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 class DateAdapter(
+  private val type: Int,//0 reg 1 team
   private val context: Context,
   private val items: List<Node>,
   private val onItemClick: (Node) -> Unit
@@ -44,24 +45,17 @@ class DateAdapter(
 
   @SuppressLint("SetTextI18n")
   override fun onBindViewHolder(holder: DateAdapter.ViewHolder, position: Int) {
-    val nowTime =ZonedDateTime.now(ZoneId.systemDefault())
+    val nowTime = ZonedDateTime.now(ZoneId.systemDefault())
     val item = items[position]
     val dateStart = localTime(item.startTime)
     val dateEnd = localTime(item.endTime)
+    val current = dateStart.isBefore(nowTime) && dateEnd.isAfter(nowTime)
+
     holder.timeStart.text = dateStart.format(formatterTime)
     holder.timeEnd.text = dateEnd.format(formatterTime)
     holder.monthStart.text = queryDate(dateStart)
     holder.monthEnd.text = queryDate(dateEnd)
     holder.itemView.setOnClickListener { onItemClick(item) }
-    val current = dateStart.isBefore(nowTime) && dateEnd.isAfter(nowTime)
-    //log("$position $current || $dateStart $dateEnd")
-    if(current) {
-      holder.diff.visibility = View.VISIBLE
-      holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
-    }else{
-      holder.diff.visibility = View.GONE
-      holder.diff.text = ""
-    }
     val stage = item.setting.coopStage.thumbnailImage.url
     Glide.with(holder.itemView.context).load(stage)
       .apply(RequestOptions.bitmapTransform(roundedCorners))
@@ -70,13 +64,33 @@ class DateAdapter(
       Glide.with(holder.itemView.context).load(item.setting.weapons[index].image.url)
         .into(imageView)
     }
-    val bossUrl = bossMap[item.setting.boss.name]
-    if (bossUrl != null) {
-      holder.boss.visibility = View.VISIBLE
-      Glide.with(holder.itemView.context).load(bossUrl).into(holder.boss)
-    } else {
-      holder.boss.visibility = View.GONE
+    if (type == 0) {
+      //log("$position $current || $dateStart $dateEnd")
+      if (current) {
+        holder.diff.visibility = View.VISIBLE
+        holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
+      } else {
+        holder.diff.visibility = View.GONE
+        holder.diff.text = ""
+      }
+      val bossUrl = bossMap[item.setting.boss.name]
+      if (bossUrl != null) {
+        holder.boss.visibility = View.VISIBLE
+        Glide.with(holder.itemView.context).load(bossUrl).into(holder.boss)
+      } else {
+        holder.boss.visibility = View.GONE
+      }
+    } else if (type == 1) { //team logo
+      holder.diff.visibility = View.VISIBLE
+      holder.diff.setBackgroundResource(R.drawable.rounded_rectangle_team)
+      if (current) {
+        holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
+      } else {
+        holder.diff.text = "距 ${nowTime.until(dateStart, ChronoUnit.HOURS)} 小时"
+      }
+      Glide.with(holder.itemView.context).load(R.drawable.team).into(holder.boss)
     }
+
   }
 
   private fun queryDate(date: ZonedDateTime): String {
