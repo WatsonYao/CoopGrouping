@@ -2,6 +2,7 @@ package watson.coopgrouping
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ class DateAdapter(
 ) : RecyclerView.Adapter<DateAdapter.ViewHolder>() {
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    val layout: View = view.findViewById(R.id.layout)
     val monthStart: TextView = view.findViewById(R.id.monthStart)
     val monthEnd: TextView = view.findViewById(R.id.monthEnd)
     val timeStart: TextView = view.findViewById(R.id.timeStart)
@@ -89,6 +91,9 @@ class DateAdapter(
         holder.diff.text = "距 ${nowTime.until(dateStart, ChronoUnit.HOURS)} 小时"
       }
       Glide.with(holder.itemView.context).load(R.drawable.team).into(holder.boss)
+      holder.layout.setOnClickListener {
+        context.startActivity(Intent(context, TeamActivity::class.java))
+      }
     }
 
   }

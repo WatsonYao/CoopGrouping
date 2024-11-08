@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".TeamActivity">
+
+    <TextView
+        android:id="@+id/clock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="4dp"
+        android:textSize="30sp"
+        tools:text="99" />
+
+    <Button
+        android:id="@+id/w3_180"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:backgroundTint="#4D7642"
+        android:text="W3 普通潮 180%"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/w4_240"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#3F5A95"
+        android:text="W4 普通潮 雾 240%"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/w5_270"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#643F95"
+        android:text="W5 退潮 270%"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/w5_300"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#643F95"
+        android:text="W5 退潮 300%"
+        android:textSize="22sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/close"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:backgroundTint="#B86077"
+        android:text="关闭计时"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:backgroundTint="#434343"
+        android:text="退出"
+        android:textSize="20sp" />
+
+
+</LinearLayout>
