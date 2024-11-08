@@ -21,25 +21,43 @@
     <Button
         android:id="@+id/w3_180"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="64dp"
         android:backgroundTint="#4D7642"
         android:text="W3 普通潮 180%"
         android:textSize="22sp" />
 
     <Button
+        android:id="@+id/w4_210"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#3F5A95"
+        android:text="W4 普通潮 雾 210%"
+        android:textSize="22sp" />
+
+    <Button
         android:id="@+id/w4_240"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#3F5A95"
         android:text="W4 普通潮 雾 240%"
         android:textSize="22sp" />
 
     <Button
+        android:id="@+id/w5_240"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#643F95"
+        android:text="W5 退潮 240%"
+        android:textSize="22sp" />
+
+    <Button
         android:id="@+id/w5_270"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#643F95"
         android:text="W5 退潮 270%"
         android:textSize="22sp" />
@@ -47,8 +65,8 @@
     <Button
         android:id="@+id/w5_300"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#643F95"
         android:text="W5 退潮 300%"
         android:textSize="22sp" />
@@ -61,7 +79,7 @@
     <Button
         android:id="@+id/close"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="64dp"
         android:backgroundTint="#B86077"
         android:text="关闭计时"
         android:textSize="20sp" />
@@ -69,7 +87,7 @@
     <Button
         android:id="@+id/exit"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="64dp"
         android:backgroundTint="#434343"
         android:text="退出"
         android:textSize="20sp" />

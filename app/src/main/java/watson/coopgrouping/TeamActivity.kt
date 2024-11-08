@@ -24,11 +24,20 @@ class TeamActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     tts.setSpeechRate(1.2f)
     clock = findViewById(R.id.clock)
 
+    //w3
     findViewById<Button>(R.id.w3_180).setOnClickListener {
       runTTs(bossW3_180)
     }
+    //w4
+    findViewById<Button>(R.id.w4_210).setOnClickListener {
+      runTTs(bossW4_210)
+    }
     findViewById<Button>(R.id.w4_240).setOnClickListener {
       runTTs(bossW4_240)
+    }
+    //w5
+    findViewById<Button>(R.id.w5_240).setOnClickListener {
+      runTTs(bossW5_240)
     }
     findViewById<Button>(R.id.w5_270).setOnClickListener {
       runTTs(bossW5_270)
@@ -36,6 +45,8 @@ class TeamActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     findViewById<Button>(R.id.w5_300).setOnClickListener {
       runTTs(bossW5_300)
     }
+
+
     findViewById<Button>(R.id.close).setOnClickListener {
       closeTTs()
     }
@@ -113,6 +124,30 @@ class TeamActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     )
   }
 
+  private val bossW4_210 by lazy {
+    listOf(
+      Thing(100, "伞", B),
+      Thing(98, "蛇", B),
+      Thing(91, "车", A),
+      Thing(89, "铁", B),
+      Thing(79, "塔", C),
+      Thing(79, "铁", B),
+      Thing(72, "绿帽", A),
+      Thing(69, "海豚", A),
+      Thing(68, "柱子", A),
+      Thing(61, "锅盖", B),
+      Thing(58, "车", C),
+      Thing(58, "鼹鼠", B),
+      Thing(48, "垫肩", B),
+      Thing(47, "塔", C),
+      Thing(47, "垫肩", C),
+      Thing(43, "蛇", C),
+      Thing(37, "车", C),
+      Thing(35, "柱子", A),
+      Thing(31, "绿帽", A),
+      Thing(28, "塔", B),
+    )
+  }
   private val bossW4_240 by lazy {
     listOf(
       Thing(100, "伞", B),
@@ -140,6 +175,37 @@ class TeamActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     )
   }
 
+  private val bossW5_240 by lazy {
+    listOf(
+      Thing(100, "锅盖", C),
+      Thing(96, "伞", C),
+      Thing(94, "铁", C),
+      Thing(89, "绿帽", A),
+      Thing(89, "锅盖", A),
+      Thing(84, "柱子", A),
+      Thing(79, "铁", B),
+      Thing(76, "两塔", B),
+      Thing(72, "车", B),
+      Thing(69, "塔", C),
+      Thing(68, "铁", C),
+      Thing(63, "鼹鼠", C),
+      Thing(60, "铁", C),
+      Thing(58, "伞", B),
+      Thing(56, "垫肩", B),
+      Thing(48, "铁", B),
+      Thing(48, "蛇", B),
+      Thing(48, "车", A),
+      Thing(47, "鼹鼠", A),
+      Thing(38, "鼹鼠", A),
+      Thing(38, "绿帽", A),
+      Thing(38, "塔", B),
+      Thing(34, "鼹鼠", B),
+      Thing(31, "垫肩", B),
+      Thing(31, "海豚", B),
+      Thing(28, "鼹鼠", A),
+
+      )
+  }
   private val bossW5_270 by lazy {
     listOf(
       Thing(100, "锅盖", C),
@@ -215,10 +281,8 @@ class TeamActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
   }
 
   override fun onDestroy() {
-    if (tts != null) {
-      tts.stop()
-      tts.shutdown()
-    }
+    tts.stop()
+    tts.shutdown()
     super.onDestroy()
   }
 
