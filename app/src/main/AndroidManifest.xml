@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,10 +21,6 @@
         android:theme="@style/Theme.CoopGrouping"
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
-        <activity
-            android:name=".TreamActivity"
-            android:exported="false"
-            android:theme="@style/Theme.CoopGrouping" />
         <activity
             android:name=".MainActivity"
             android:exported="true" >
