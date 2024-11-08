@@ -152,7 +152,7 @@ class TeamActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
       Thing(77, "两塔", B),
       Thing(73, "垫肩", A),
       Thing(72, "鼹鼠", A),
-      Thing(65, "铁", A),
+      Thing(66, "铁", A),
       Thing(64, "塔", C),
       Thing(64, "铁", C),
       Thing(61, "柱子", C),
