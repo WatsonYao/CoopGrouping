@@ -8,6 +8,45 @@ interface ScheduleService {
   suspend fun getSchedules(): JSON
 }
 
+interface ScheduleService2 {
+  @GET("coop-schedules.json")
+  suspend fun getSchedules(): JSON2
+}
+
+//二代
+@Keep
+data class JSON2(
+  val details: List<Stage>,
+)
+
+@Keep
+data class Stage(
+  val start_time: String,
+  val end_time: String,
+  val weapons: List<Weapon2Wrap>,
+  val stage: StageMap
+)
+
+@Keep
+data class StageMap(
+  val name: String,
+  val image: String,
+)
+
+@Keep
+data class Weapon2Wrap(
+  val id: Long,
+  val weapon: Weapon2,
+)
+
+@Keep
+data class Weapon2(
+  val name: String,
+  val image: String,
+)
+
+
+//三代
 @Keep
 data class JSON(
   val data: Data,
