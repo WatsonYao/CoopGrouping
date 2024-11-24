@@ -168,12 +168,15 @@ class DateAdapter2(
     holder.itemView.setOnClickListener { onItemClick(item) }
 
     val stage = imageAssets + item.stage.image
-    Glide.with(holder.itemView.context).load(stage)
+    val fixStage = stage.replace("//","/")
+    Glide.with(holder.itemView.context).load(fixStage)
       .apply(RequestOptions.bitmapTransform(roundedCorners))
       .into(holder.image)
     listOf(holder.w1, holder.w2, holder.w3, holder.w4).forEachIndexed { index, imageView ->
       val url = imageAssets + queryWeaponImage(index,item)
-      Glide.with(holder.itemView.context).load(url)
+      val fixUrl = url.replace("//","/")
+      //log("index=$index fixUrl=$fixUrl")
+      Glide.with(holder.itemView.context).load(fixUrl)
         .into(imageView)
     }
     if (current) {
@@ -188,12 +191,12 @@ class DateAdapter2(
   }
 
   private fun queryWeaponImage(index: Int, stage: Stage): String {
-    val temp = stage.weapons.getOrNull(index)
-    log("temp=$temp")
-    if (temp?.weapon == null) {
-      return stage.weapons[index].coop_special_weapon?.image ?: ""
+    val temp = stage.weapons.get(index)
+    return if (temp.weapon != null) {
+       stage.weapons[index].weapon?.image ?: ""
+    }else {
+       stage.weapons[index].coop_special_weapon?.image ?: ""
     }
-    return stage.weapons[index].weapon.image
   }
 
   private fun queryDate(date: ZonedDateTime): String {

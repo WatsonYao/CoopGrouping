@@ -11,7 +11,7 @@ android {
         applicationId = "watson.coopgrouping"
         minSdk = 26
         targetSdk = 34
-        versionCode = 6
+        versionCode = 7
         versionName = "1.3.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

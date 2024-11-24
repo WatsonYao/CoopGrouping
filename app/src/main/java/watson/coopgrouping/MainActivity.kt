@@ -51,6 +51,9 @@ class PagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fr
   }
 }
 
+//https://splatoon2.ink/data/coop-schedules.json
+//https://splatoon3.ink/data/schedules.json
+
 
 
 
