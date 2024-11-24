@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     val viewPager: ViewPager2 = findViewById(R.id.main)
-    val items = listOf("Page 1", "Page 2", "Page 3", "Page 4")
     val adapter = PagerAdapter(this)
 
     viewPager.adapter = adapter

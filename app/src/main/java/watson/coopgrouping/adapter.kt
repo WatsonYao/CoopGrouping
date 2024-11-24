@@ -172,7 +172,7 @@ class DateAdapter2(
       .apply(RequestOptions.bitmapTransform(roundedCorners))
       .into(holder.image)
     listOf(holder.w1, holder.w2, holder.w3, holder.w4).forEachIndexed { index, imageView ->
-      val url = imageAssets + item.weapons[index].weapon.image
+      val url = imageAssets + queryWeaponImage(index,item)
       Glide.with(holder.itemView.context).load(url)
         .into(imageView)
     }
@@ -185,6 +185,15 @@ class DateAdapter2(
       holder.diff.visibility = View.VISIBLE
       holder.diff.text = "距 ${nowTime.until(dateStart, ChronoUnit.HOURS)} 小时"
     }
+  }
+
+  private fun queryWeaponImage(index: Int, stage: Stage): String {
+    val temp = stage.weapons.getOrNull(index)
+    log("temp=$temp")
+    if (temp?.weapon == null) {
+      return stage.weapons[index].coop_special_weapon?.image ?: ""
+    }
+    return stage.weapons[index].weapon.image
   }
 
   private fun queryDate(date: ZonedDateTime): String {

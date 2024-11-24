@@ -37,6 +37,7 @@ data class StageMap(
 data class Weapon2Wrap(
   val id: Long,
   val weapon: Weapon2,
+  val coop_special_weapon: Weapon2?
 )
 
 @Keep
