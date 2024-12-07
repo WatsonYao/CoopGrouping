@@ -41,16 +41,12 @@ class MainFragment : Fragment() {
 
   private val itemsReg = mutableListOf<Node>()
   private val itemsTeam = mutableListOf<Node>()
-  private val itemsBigRun = mutableListOf<Node>()
 
   private val adapterReg by lazy {
     DateAdapter(0, requireContext(), itemsReg) {}
   }
   private val adapterTeam by lazy {
     DateAdapter(1, requireContext(), itemsTeam) {}
-  }
-  private val adapterBigRun by lazy {
-    DateAdapter(2, requireContext(), itemsBigRun) {}
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -71,7 +67,7 @@ class MainFragment : Fragment() {
 
     val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
     recyclerView.layoutManager = layoutManager
-    recyclerView.adapter = ConcatAdapter(config, adapterBigRun,adapterTeam, adapterReg)
+    recyclerView.adapter = ConcatAdapter(config, adapterTeam, adapterReg)
 
     loadData()
   }
@@ -91,15 +87,10 @@ class MainFragment : Fragment() {
           if (result.data.coopGroupingSchedule.teamContestSchedules.nodes.isNotEmpty()) {
             itemsTeam.addAll(result.data.coopGroupingSchedule.teamContestSchedules.nodes)
           }
-          itemsBigRun.clear()
-          if (result.data.coopGroupingSchedule.bigRunSchedules.nodes.isNotEmpty()) {
-            itemsBigRun.addAll(result.data.coopGroupingSchedule.bigRunSchedules.nodes)
-          }
         }
         loading = false
         swipeRefreshLayout.isRefreshing = false
         adapterTeam.notifyDataSetChanged()
-        adapterBigRun.notifyDataSetChanged()
         adapterReg.notifyDataSetChanged()
       }
     } catch (e: Exception) {

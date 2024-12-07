@@ -62,6 +62,7 @@ data class Data(
 data class CoopGroupingSchedule(
   val regularSchedules: RegularSchedules,
   val teamContestSchedules: RegularSchedules,
+  val bigRunSchedules: RegularSchedules,
 )
 
 @Keep

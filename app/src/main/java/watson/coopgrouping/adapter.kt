@@ -94,6 +94,18 @@ class DateAdapter(
       holder.layout.setOnClickListener {
         context.startActivity(Intent(context, TeamActivity::class.java))
       }
+    } else if (type == 2) { //bigRun logo
+      holder.diff.visibility = View.VISIBLE
+      holder.diff.setBackgroundResource(R.drawable.rounded_rectangle_bigrun)
+      if (current) {
+        holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
+      } else {
+        holder.diff.text = "距 ${nowTime.until(dateStart, ChronoUnit.HOURS)} 小时"
+      }
+      Glide.with(holder.itemView.context).load(R.drawable.br).into(holder.boss)
+      holder.layout.setOnClickListener {
+        //context.startActivity(Intent(context, TeamActivity::class.java))
+      }
     }
 
   }
@@ -168,13 +180,13 @@ class DateAdapter2(
     holder.itemView.setOnClickListener { onItemClick(item) }
 
     val stage = imageAssets + item.stage.image
-    val fixStage = stage.replace("//","/")
+    val fixStage = stage.replace("//", "/")
     Glide.with(holder.itemView.context).load(fixStage)
       .apply(RequestOptions.bitmapTransform(roundedCorners))
       .into(holder.image)
     listOf(holder.w1, holder.w2, holder.w3, holder.w4).forEachIndexed { index, imageView ->
-      val url = imageAssets + queryWeaponImage(index,item)
-      val fixUrl = url.replace("//","/")
+      val url = imageAssets + queryWeaponImage(index, item)
+      val fixUrl = url.replace("//", "/")
       //log("index=$index fixUrl=$fixUrl")
       Glide.with(holder.itemView.context).load(fixUrl)
         .into(imageView)
@@ -193,9 +205,9 @@ class DateAdapter2(
   private fun queryWeaponImage(index: Int, stage: Stage): String {
     val temp = stage.weapons.get(index)
     return if (temp.weapon != null) {
-       stage.weapons[index].weapon?.image ?: ""
-    }else {
-       stage.weapons[index].coop_special_weapon?.image ?: ""
+      stage.weapons[index].weapon?.image ?: ""
+    } else {
+      stage.weapons[index].coop_special_weapon?.image ?: ""
     }
   }
 
