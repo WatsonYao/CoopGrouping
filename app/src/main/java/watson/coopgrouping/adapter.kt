@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -60,11 +61,16 @@ class DateAdapter(
     holder.itemView.setOnClickListener { onItemClick(item) }
     val stage = item.setting.coopStage.thumbnailImage.url
     Glide.with(holder.itemView.context).load(stage)
-      .apply(RequestOptions.bitmapTransform(roundedCorners))
+      //.apply(RequestOptions.bitmapTransform(roundedCorners))
       .into(holder.image)
     listOf(holder.w1, holder.w2, holder.w3, holder.w4).forEachIndexed { index, imageView ->
       Glide.with(holder.itemView.context).load(item.setting.weapons[index].image.url)
         .into(imageView)
+      
+      imageView.setOnClickListener {
+        val weaponName = item.setting.weapons[index].name
+        Toast.makeText(context, weaponName, Toast.LENGTH_SHORT).show()
+      }
     }
     if (type == 0) {
       //log("$position $current || $dateStart $dateEnd")
@@ -92,7 +98,7 @@ class DateAdapter(
       }
       Glide.with(holder.itemView.context).load(R.drawable.team).into(holder.boss)
       holder.layout.setOnClickListener {
-        context.startActivity(Intent(context, TeamActivity::class.java))
+        //context.startActivity(Intent(context, TeamActivity::class.java))
       }
     } else if (type == 2) { //bigRun logo
       holder.diff.visibility = View.VISIBLE
@@ -182,7 +188,7 @@ class DateAdapter2(
     val stage = imageAssets + item.stage.image
     val fixStage = stage.replace("//", "/")
     Glide.with(holder.itemView.context).load(fixStage)
-      .apply(RequestOptions.bitmapTransform(roundedCorners))
+      //.apply(RequestOptions.bitmapTransform(roundedCorners))
       .into(holder.image)
     listOf(holder.w1, holder.w2, holder.w3, holder.w4).forEachIndexed { index, imageView ->
       val url = imageAssets + queryWeaponImage(index, item)
@@ -190,6 +196,11 @@ class DateAdapter2(
       //log("index=$index fixUrl=$fixUrl")
       Glide.with(holder.itemView.context).load(fixUrl)
         .into(imageView)
+        
+      imageView.setOnClickListener {
+        val weaponName = getWeaponName(index, item)
+        Toast.makeText(context, weaponName, Toast.LENGTH_SHORT).show()
+      }
     }
     if (current) {
       holder.diff.setBackgroundResource(R.drawable.rounded_rectangle)
@@ -208,6 +219,15 @@ class DateAdapter2(
       stage.weapons[index].weapon?.image ?: ""
     } else {
       stage.weapons[index].coop_special_weapon?.image ?: ""
+    }
+  }
+
+  private fun getWeaponName(index: Int, stage: Stage): String {
+    val temp = stage.weapons.get(index)
+    return if (temp.weapon != null) {
+      stage.weapons[index].weapon?.name ?: "未知武器"
+    } else {
+      stage.weapons[index].coop_special_weapon?.name ?: "未知特殊武器"
     }
   }
 
