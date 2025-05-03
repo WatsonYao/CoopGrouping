@@ -1,17 +1,6 @@
 package watson.coopgrouping
 
 import androidx.annotation.Keep
-import retrofit2.http.GET
-
-interface ScheduleService {
-  @GET("schedules.json")
-  suspend fun getSchedules(): JSON
-}
-
-interface ScheduleService2 {
-  @GET("coop-schedules.json")
-  suspend fun getSchedules(): JSON2
-}
 
 //二代
 @Keep
@@ -49,7 +38,7 @@ data class Weapon2(
 
 //三代
 @Keep
-data class JSON(
+data class JSON3(
   val data: Data,
 )
 
