@@ -33,6 +33,41 @@
             android:name=".TeamActivity"
             android:exported="true" >
         </activity>
+
+        <!-- Main Widget Provider -->
+        <receiver
+            android:name=".MainWidgetProvider"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/main_widget_info" />
+        </receiver>
+
+        <!-- Second Widget Provider -->
+        <receiver
+            android:name=".SecondWidgetProvider"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/second_widget_info" />
+        </receiver>
+
+        <!-- Main Widget Service -->
+        <service
+            android:name=".MainWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <!-- Second Widget Service -->
+        <service
+            android:name=".SecondWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>
