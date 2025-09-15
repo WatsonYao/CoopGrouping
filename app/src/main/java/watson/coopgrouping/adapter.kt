@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import java.time.Duration
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -54,6 +55,11 @@ class DateAdapter(
     val dateEnd = localTime(item.endTime)
     val current = dateStart.isBefore(nowTime) && dateEnd.isAfter(nowTime)
 
+    val duration = Duration.between(dateStart, dateEnd)
+
+// Get the total number of hours in the duration
+    val hours = duration.toHours()
+
     holder.timeStart.text = dateStart.format(formatterTime)
     holder.timeEnd.text = dateEnd.format(formatterTime)
     holder.monthStart.text = queryDate(dateStart)
@@ -76,10 +82,10 @@ class DateAdapter(
       //log("$position $current || $dateStart $dateEnd")
       if (current) {
         holder.diff.visibility = View.VISIBLE
-        holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
+        holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时\n共 $hours 时"
       } else {
-        holder.diff.visibility = View.GONE
-        holder.diff.text = ""
+        holder.diff.visibility = View.VISIBLE
+        holder.diff.text = "共 $hours 时"
       }
       val bossUrl = bossMap[item.setting.boss.name]
       if (bossUrl != null) {
@@ -92,9 +98,9 @@ class DateAdapter(
       holder.diff.visibility = View.VISIBLE
       holder.diff.setBackgroundResource(R.drawable.rounded_rectangle_team)
       if (current) {
-        holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
+        holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时\n共 $hours 时"
       } else {
-        holder.diff.text = "距 ${nowTime.until(dateStart, ChronoUnit.HOURS)} 小时"
+        holder.diff.text = "距 ${nowTime.until(dateStart, ChronoUnit.HOURS)} 小时\n共 $hours 时"
       }
       Glide.with(holder.itemView.context).load(R.drawable.team).into(holder.boss)
       holder.layout.setOnClickListener {
@@ -104,9 +110,9 @@ class DateAdapter(
       holder.diff.visibility = View.VISIBLE
       holder.diff.setBackgroundResource(R.drawable.rounded_rectangle_bigrun)
       if (current) {
-        holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
+        holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时\n共 $hours 时"
       } else {
-        holder.diff.text = "距 ${nowTime.until(dateStart, ChronoUnit.HOURS)} 小时"
+        holder.diff.text = "距 ${nowTime.until(dateStart, ChronoUnit.HOURS)} 小时\n共 $hours 时"
       }
       Glide.with(holder.itemView.context).load(R.drawable.br).into(holder.boss)
       holder.layout.setOnClickListener {
