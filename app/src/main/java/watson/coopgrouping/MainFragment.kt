@@ -18,7 +18,7 @@ import java.io.IOException
 
 class MainFragment : Fragment() {
 
-  private suspend fun fetchSchedules(): JSON3? {
+  private suspend fun fetchSchedules(): APPJSON3? {
     return try {
       val response = NetworkModule.apiService.getSplatoon3Schedules().execute()
       if (response.isSuccessful) {
@@ -49,9 +49,9 @@ class MainFragment : Fragment() {
   private val swipeRefreshLayout: SwipeRefreshLayout
     get() = requireView().findViewById(R.id.swipeRefreshLayout)
 
-  private val itemsReg = mutableListOf<Node>()
-  private val itemsTeam = mutableListOf<Node>()
-  private val itemsBigRun = mutableListOf<Node>()
+  private val itemsReg = mutableListOf<RegularNode>()
+  private val itemsTeam = mutableListOf<RegularNode>()
+  private val itemsBigRun = mutableListOf<RegularNode>()
 
   private val adapterReg by lazy {
     DateAdapter(0, requireContext(), itemsReg) {}

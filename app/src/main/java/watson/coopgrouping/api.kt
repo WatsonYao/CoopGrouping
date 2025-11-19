@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 
 //二代
 @Keep
-data class JSON2(
+data class APPJSON2(
   val details: List<Stage>,
 )
 
@@ -38,13 +38,14 @@ data class Weapon2(
 
 //三代
 @Keep
-data class JSON3(
+data class APPJSON3(
   val data: Data,
 )
 
 @Keep
 data class Data(
   val coopGroupingSchedule: CoopGroupingSchedule,
+  val bankaraSchedules: BankaraSchedules,
 )
 
 @Keep
@@ -55,12 +56,46 @@ data class CoopGroupingSchedule(
 )
 
 @Keep
-data class RegularSchedules(
-  val nodes: List<Node>
+data class BankaraSchedules(
+  val nodes: List<Bankara>
 )
 
 @Keep
-data class Node(
+data class Bankara(
+  val startTime: String,
+  val endTime: String,
+  val bankaraMatchSettings: List<BankaraMatchSetting>,
+)
+
+@Keep
+data class BankaraMatchSetting(
+  val vsStages: List<VsStage>,
+  val vsRule: VsRule,
+  val bankaraMode: String
+)
+
+@Keep
+data class VsStage(
+  val vsStageId: String,
+  val id: String,
+  val image: ImageUrl
+)
+
+
+@Keep
+data class VsRule(
+  val name: String,
+  val rule: String,
+  val id: String,
+)
+
+@Keep
+data class RegularSchedules(
+  val nodes: List<RegularNode>
+)
+
+@Keep
+data class RegularNode(
   val startTime: String,
   val endTime: String,
   val setting: Setting,

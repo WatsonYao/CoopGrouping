@@ -17,7 +17,7 @@ import java.io.IOException
 
 class SecondFragment : Fragment() {
 
-  private suspend fun fetchSchedules(): JSON2? {
+  private suspend fun fetchSchedules(): APPJSON2? {
     return try {
       val response = NetworkModule.apiService.getSplatoon2Schedules().execute()
       if (response.isSuccessful) {

@@ -2,7 +2,6 @@ package watson.coopgrouping
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import java.time.Duration
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -22,8 +20,8 @@ import java.time.temporal.ChronoUnit
 class DateAdapter(
   private val type: Int,//0 reg 1 team
   private val context: Context,
-  private val items: List<Node>,
-  private val onItemClick: (Node) -> Unit
+  private val items: List<RegularNode>,
+  private val onItemClick: (RegularNode) -> Unit
 ) : RecyclerView.Adapter<DateAdapter.ViewHolder>() {
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -72,7 +70,7 @@ class DateAdapter(
     listOf(holder.w1, holder.w2, holder.w3, holder.w4).forEachIndexed { index, imageView ->
       Glide.with(holder.itemView.context).load(item.setting.weapons[index].image.url)
         .into(imageView)
-      
+
       imageView.setOnClickListener {
         val weaponName = item.setting.weapons[index].name
         Toast.makeText(context, weaponName, Toast.LENGTH_SHORT).show()
@@ -202,7 +200,7 @@ class DateAdapter2(
       //log("index=$index fixUrl=$fixUrl")
       Glide.with(holder.itemView.context).load(fixUrl)
         .into(imageView)
-        
+
       imageView.setOnClickListener {
         val weaponName = getWeaponName(index, item)
         Toast.makeText(context, weaponName, Toast.LENGTH_SHORT).show()
@@ -244,6 +242,134 @@ class DateAdapter2(
   private val roundedCorners: RoundedCorners by lazy {
     val px = context.resources.displayMetrics.density * 12
     RoundedCorners(px.toInt())
+  }
+
+  private val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
+  private val formatterDay = DateTimeFormatter.ofPattern("dd")
+  private val formatterMonth = DateTimeFormatter.ofPattern("MM")
+
+  override fun getItemCount() = items.size
+}
+
+class BankaraAdapter(
+  private val context: Context,
+  private val items: List<Bankara>,
+  private val onItemClick: (Bankara) -> Unit
+) : RecyclerView.Adapter<BankaraAdapter.ViewHolder>() {
+
+
+  class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    val layout: View = view.findViewById(R.id.layout)
+    val monthStart: TextView = view.findViewById(R.id.monthStart)
+    val monthEnd: TextView = view.findViewById(R.id.monthEnd)
+    val timeStart: TextView = view.findViewById(R.id.timeStart)
+    val timeEnd: TextView = view.findViewById(R.id.timeEnd)
+    val diff: TextView = view.findViewById(R.id.diff)
+    val image1: ImageView = view.findViewById(R.id.image1)
+    val image2: ImageView = view.findViewById(R.id.image2)
+    val image3: ImageView = view.findViewById(R.id.image3)
+    val image4: ImageView = view.findViewById(R.id.image4)
+    val title1: TextView = view.findViewById(R.id.title1)
+    val title2: TextView = view.findViewById(R.id.title2)
+    val title3: TextView = view.findViewById(R.id.title3)
+    val title4: TextView = view.findViewById(R.id.title4)
+    val part1Mode: TextView = view.findViewById(R.id.part1Mode)
+    val part2Mode: TextView = view.findViewById(R.id.part2Mode)
+    val part1ModeIcon: ImageView = view.findViewById(R.id.part1ModeIcon)
+    val part2ModeIcon: ImageView = view.findViewById(R.id.part2ModeIcon)
+  }
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BankaraAdapter.ViewHolder {
+    val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_bankara, parent, false)
+    return ViewHolder(view)
+  }
+
+
+  @SuppressLint("SetTextI18n")
+  override fun onBindViewHolder(holder: BankaraAdapter.ViewHolder, position: Int) {
+    val nowTime = ZonedDateTime.now(ZoneId.systemDefault())
+    val item = items[position]
+    val dateStart = localTime(item.startTime)
+    val dateEnd = localTime(item.endTime)
+    val current = dateStart.isBefore(nowTime) && dateEnd.isAfter(nowTime)
+    val isAfterNow = dateStart.isAfter(nowTime) && dateEnd.isAfter(nowTime)
+
+    holder.timeStart.text = dateStart.format(formatterTime)
+    holder.timeEnd.text = dateEnd.format(formatterTime)
+    holder.monthStart.text = queryDate(dateStart)
+    holder.monthEnd.text = queryDate(dateEnd)
+    holder.itemView.setOnClickListener { onItemClick(item) }
+
+    log("position=$position item=${item}")
+
+    //val fixStage = stage.replace("//", "/")
+    //part1
+    val stage1 = item.bankaraMatchSettings[0].vsStages
+    Glide.with(holder.itemView.context).load(stage1[0].image.url)
+      .into(holder.image1)
+    Glide.with(holder.itemView.context).load(stage1[1].image.url)
+      .into(holder.image2)
+
+    //part2
+    val stage2 = item.bankaraMatchSettings[1].vsStages
+    Glide.with(holder.itemView.context).load(stage2[0].image.url)
+      .into(holder.image3)
+    Glide.with(holder.itemView.context).load(stage2[1].image.url)
+      .into(holder.image4)
+
+    //title
+    holder.title1.text = queryZH(stage1[0].id)
+    holder.title2.text = queryZH(stage1[1].id)
+    holder.title3.text = queryZH(stage2[0].id)
+    holder.title4.text = queryZH(stage2[1].id)
+
+    //mode
+    holder.part1Mode.text = queryMode(item.bankaraMatchSettings[0].bankaraMode)
+    holder.part2Mode.text = queryMode(item.bankaraMatchSettings[1].bankaraMode)
+
+
+    //icon
+    Glide.with(holder.itemView.context).load(queryModeIcon(item.bankaraMatchSettings[0].vsRule.rule))
+      .into(holder.part1ModeIcon)
+    Glide.with(holder.itemView.context).load(queryModeIcon(item.bankaraMatchSettings[1].vsRule.rule))
+      .into(holder.part2ModeIcon)
+
+    if (current) {
+      holder.diff.setBackgroundResource(R.drawable.rounded_rectangle)
+      holder.diff.visibility = View.VISIBLE
+      holder.diff.text = "剩 ${nowTime.until(dateEnd, ChronoUnit.HOURS)} 小时"
+    } else if (isAfterNow) {
+      holder.diff.setBackgroundResource(R.drawable.rounded_rectangle_future)
+      holder.diff.visibility = View.VISIBLE
+      holder.diff.text = "距 ${nowTime.until(dateStart, ChronoUnit.HOURS)} 小时"
+    }
+  }
+
+  private fun queryZH(id: String): String {
+    return ZHMap[id] ?: "未知"
+  }
+
+  private fun queryMode(mode: String): String {
+    return when (mode) {
+      "CHALLENGE" -> "挑战"
+      "OPEN" -> "开放"
+      else -> "未知"
+    }
+  }
+
+
+  private fun queryDate(date: ZonedDateTime): String {
+    return "${date.format(formatterMonth)}月${date.format(formatterDay)}，周${getDayOfWeek(date)}"
+  }
+
+  private fun queryModeIcon(mode: String): Int {
+    return when (mode) {
+      "AREA" -> R.drawable.area
+      "GOAL" -> R.drawable.goal
+      "CLAM" -> R.drawable.clam
+      "LOFT" -> R.drawable.loft
+      else -> R.drawable.ic_launcher_foreground
+    }
   }
 
   private val formatterTime = DateTimeFormatter.ofPattern("HH:mm")

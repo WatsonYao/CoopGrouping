@@ -31,13 +31,15 @@ class MainActivity : AppCompatActivity() {
 
 class PagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
-  override fun getItemCount(): Int = 2
+  override fun getItemCount(): Int = 3
 
   override fun createFragment(position: Int): Fragment {
     return if (position == 0) {
       MainFragment()
-    } else {
+    } else if(position == 1){
       SecondFragment()
+    } else {
+      BankaraFragment()
     }
   }
 }

@@ -11,10 +11,10 @@ class MainWidgetRemoteViewsFactory(
   private val intent: Intent
 ) : RemoteViewsService.RemoteViewsFactory {
 
-  private var regularSchedules: List<Node> = emptyList()
-  private var teamSchedules: List<Node> = emptyList()
-  private var bigRunSchedules: List<Node> = emptyList()
-  private var combinedSchedules: MutableList<Node> = mutableListOf()
+  private var regularSchedules: List<RegularNode> = emptyList()
+  private var teamSchedules: List<RegularNode> = emptyList()
+  private var bigRunSchedules: List<RegularNode> = emptyList()
+  private var combinedSchedules: MutableList<RegularNode> = mutableListOf()
 
 
   override fun onCreate() {
