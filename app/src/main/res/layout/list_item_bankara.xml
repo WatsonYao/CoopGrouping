@@ -9,8 +9,6 @@
         android:id="@+id/text_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/image"
-        android:layout_alignTop="@+id/image"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/text_background_gray_right_rounded"
@@ -233,7 +231,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.4dp"
-        android:layout_below="@+id/image"
         android:alpha="0.2"
         android:background="#000000"
         android:visibility="gone" />
