@@ -9,3 +9,7 @@
 
 ![三代](https://github.com/user-attachments/assets/f5bbf9f0-885c-4c00-aba0-26700dfd00d1)
 ![二代](https://github.com/user-attachments/assets/518a571e-0f29-441f-bb4d-067c243f60ff)
+![三代蛮颓](https://github.com/user-attachments/assets/6e67b1b6-1bb0-45d6-a13c-d1e286ca5bc8)
+
+
+
